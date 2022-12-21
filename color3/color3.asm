@@ -19,23 +19,24 @@ includelib \masm32\lib\msvcrt.lib
 
 Quit 		proto 
 SetColor 	proto :DWORD, :DWORD
+
 .const
-	Black 	= 0
-	Blue 	= 1
-	Green	= 2
-	Cyan	= 3
-	Red		= 4
-	Magenta	= 5
-	Brown	= 6
-	LightGray	= 7
-	DarkGray	= 8
-	LightBlue	= 9
-	LightGreen	= 10
-	LightCyan	= 11
-	LightRed	= 12
+	Black 			= 0
+	Blue 			= 1
+	Green			= 2
+	Cyan			= 3
+	Red				= 4
+	Magenta			= 5
+	Brown			= 6
+	LightGray		= 7
+	DarkGray		= 8
+	LightBlue		= 9
+	LightGreen		= 10
+	LightCyan		= 11
+	LightRed		= 12
 	LightMagenta	= 13
-	Yellow	= 14
-	White	= 15
+	Yellow			= 14
+	White			= 15
 
 .data?
 
@@ -47,40 +48,26 @@ SetColor 	proto :DWORD, :DWORD
 start:
 	fn SetConsoleTitle, "Test macroses"
 	;-----------------------------------
-	invoke SetColor,0ah,Black
+	invoke crt_system,chr$("color a0")
 	;-----------------------------------
 	call main
 	;-----------------------------------
-	invoke Quit
+	;-----------------------------------
+	invoke crt_system,chr$("pause")
 	;-----------------------------------
 	invoke ExitProcess,0
 
 
 ;---------------------------------------
 main proc
-	invoke crt_puts, chr$("Hello wrld!")
+	
+	invoke crt_system,chr$("dir")
 
 	ret
 main endp
 
 ;---------------------------------------
 
-
-Quit proc
-
-	szText szExit,"Press any key..."
-	;-------------------------------
-	ccout(offset szExit)
-	;-------------------------------
-	_while:
-		test FUNC(crt__kbhit),eax
-		;------------------------
-		je _while
-		;---------------
-		invoke crt__getch
-
-	ret
-Quit endp
 ;---------------------------------------
 SetColor proc uses ebx esi edi color:DWORD,cBk:DWORD 
 	xor ebx,ebx
@@ -92,9 +79,9 @@ SetColor proc uses ebx esi edi color:DWORD,cBk:DWORD
 	;--------------------
 	invoke SetConsoleTextAttribute, rv(GetStdHandle,-11),ebx
 	;---------------------------------------------------
-	
-	
 	ret
 SetColor endp
+;---------------------------------------
+
 ;---------------------------------------
 end start
