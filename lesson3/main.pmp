@@ -1,0 +1,4 @@
+[PROJECT]
+ResourceFile=
+CompileOptions=/c /coff
+LinkOptions= /SUBSYSTEM:CONSOLE
